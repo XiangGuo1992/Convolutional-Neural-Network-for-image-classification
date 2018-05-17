@@ -4,7 +4,7 @@ Created on Tue May 15 23:45:35 2018
 
 @author: Xiang Guo
 """
-# from https://www.kaggle.com/sentdex/full-classification-example-with-convnet/code
+# modified from https://www.kaggle.com/sentdex/full-classification-example-with-convnet/code
 
 import cv2                 # working with, mainly resizing, images
 import numpy as np         # dealing with arrays
@@ -12,7 +12,7 @@ import os                  # dealing with directories
 from random import shuffle # mixing up or currently ordered data that might lead our network astray in training.
 from tqdm import tqdm      # a nice pretty percentage bar for tasks. Thanks to viewer Daniel Bühler for this suggestion
 
-
+#change the direction
 os.chdir('C:\\github\\action_detection_test\\frames\\test')
 directory = 'C:\\github\\action_detection_test\\frames\\test'
 subdirectory = [x[0] for x in os.walk(directory)]
@@ -20,12 +20,14 @@ del subdirectory[0]
 
 TRAIN_DIR = subdirectory
 TEST_DIR = 'C:\\github\\action_detection_test\\frames\\validation\\'
+#set the image size
 IMG_SIZE = 150
+#learning rate
 LR = 1e-3
 
 MODEL_NAME = 'action-{}-{}.model'.format(LR, '6conv-basic') # just so we remember which saved model is which, sizes must match
 
-
+#define the labels
 def label_img(sub_label):
     word_label = sub_label.split('\\')[-1]
 
@@ -38,7 +40,7 @@ def label_img(sub_label):
     
     elif word_label == 'Cut': return [0,0,0,1]
     
-    
+#create training data from the subdirection    
 def create_train_data():
     training_data = []
     for sub_label in tqdm(TRAIN_DIR):
@@ -178,7 +180,7 @@ for num,data in enumerate(test_data[:12]):
 plt.show()
 
 
-
+#write the result
 with open('result.csv','w') as f:
     f.write('id,label\n')
             
